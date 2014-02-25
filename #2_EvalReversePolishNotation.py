@@ -27,16 +27,9 @@ class Solution:
                 # handle "/" operator.
                     i = num.pop()
                     j = num.pop()
-                    
-                    if (i*j < 0):   
-                    # in the LeetcodeOJ, 6/(-132)should be zero while in python interpreter the result is -1.
-                        if (i<0):
-                            i = -i
-                        else:
-                            j = -j
-                        num.append(0-j/i)
-                    else:
-                        num.append(j/i)
+                # python divsion mechanism has something different with C/C++, 
+                # simply j/i will make a mistake in the OJ system
+                    num.append(int(j/float(i))
                         
                 else:   # in fact this problem should have no else situation.
                     raise Exception('Not a number or operator')
