@@ -4,21 +4,30 @@ class Solution:
     def evalRPN(self, tokens):
         num = []
         for token in tokens:
-            try:
+            try:    # if token is an integer, push it into num, else it should be a operator.
                 num.append(int(token))
             except ValueError:
-                if (token == '+'):
+                
+                if (token == '+'):  
+                # handle "+" operator, pop the last two number in the stack, do operation.
                     num.append(num.pop() + num.pop())
-                elif (token == '*'):
+                
+                elif (token == '*'):    
+                # handle "*" operator
                     num.append(num.pop() * num.pop())
-                elif (token == '-'):
+               
+                elif (token == '-'):    
+                # handle "-" operator
                     i = num.pop()
                     j = num.pop()
                     num.append(j - i)
-                elif (token == '/'):
+                
+                elif (token == '/'):    # handle "/" operator.
                     i = num.pop()
                     j = num.pop()
-                    if (i*j < 0):
+                    
+                    if (i*j < 0):   
+                    # in the LeetcodeOJ, 6/(-132)should be zero while in python interpreter the result is -1.
                         if (i<0):
                             i = -i
                         else:
@@ -26,6 +35,8 @@ class Solution:
                         num.append(0-j/i)
                     else:
                         num.append(j/i)
-                else:
+                        
+                else:   # in fact this problem should have no else situation.
                     raise Exception('Not a number or operator')
+                    
         return num.pop()
