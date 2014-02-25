@@ -23,7 +23,8 @@ class Solution:
                     j = num.pop()
                     num.append(j - i)
                 
-                elif (token == '/'):    # handle "/" operator.
+                elif (token == '/'):    
+                # handle "/" operator.
                     i = num.pop()
                     j = num.pop()
                     
