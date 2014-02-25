@@ -4,10 +4,11 @@ class Solution:
     def evalRPN(self, tokens):
         num = []
         for token in tokens:
-            try:    # if token is an integer, push it into num, else it should be a operator.
+        # if token is an integer, push it into num, else it should be a operator.    
+            try:    
                 num.append(int(token))
-            except ValueError:
                 
+            except ValueError:
                 if (token == '+'):  
                 # handle "+" operator, pop the last two number in the stack, do operation.
                     num.append(num.pop() + num.pop())
