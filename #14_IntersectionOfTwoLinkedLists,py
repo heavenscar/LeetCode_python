@@ -1,0 +1,83 @@
+__author__ = 'valthonis'
+
+"""
+Write a program to find the node at which the intersection of two singly linked lists begins.
+
+
+For example, the following two linked lists:
+
+A:          a1 → a2
+                   ↘
+                     c1 → c2 → c3
+                   ↗
+B:     b1 → b2 → b3
+begin to intersect at node c1.
+
+
+Notes:
+
+If the two linked lists have no intersection at all, return null.
+The linked lists must retain their original structure after the function returns.
+You may assume there are no cycles anywhere in the entire linked structure.
+Your code should preferably run in O(n) time and use only O(1) memory.
+"""
+
+# Definition of the List Node
+
+
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+# Solution
+
+
+def get_intersection_node(headA, headB):
+
+    # check Null LinkedList
+    if not headA or not headB:
+        return None
+
+    # go to the end of the two lists, find if the end nodes are the same
+    # if the end nodes are not the same,
+    # then the two lists has no intersection defined in the problem
+    # else there is intersection parts
+
+    a = headA
+    b = headB
+    countA = 1
+    countB = 1
+
+    while a.next:
+        a = a.next
+        countA += 1
+    while b.next:
+        b = b.next
+        countB += 1
+
+    if a is not b:
+        return None
+
+    # go through the longer list until the remain length is as long as the shorter list
+    # then go through both lists step by step to find the beginning of the intersection
+    
+    a, b = headA, headB
+
+    i = 0
+    if countA > countB:
+        while i < countA - countB:
+            a = a.next
+            i += 1
+    elif countA < countB:
+        while i < countB - countA:
+            b = b.next
+            i += 1
+
+    while a is not b:
+        a = a.next
+        b = b.next
+
+    return a
+
+
