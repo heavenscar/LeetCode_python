@@ -5,7 +5,7 @@ Given n points on a 2D plane, find the maximum number of points that lie on the 
 Created on 2014.9.10
 @author: valthonis
 
-A nlgn solution for this problem
+A n^2 solution for this problem
 '''
 
 # Definition for a point
@@ -20,40 +20,27 @@ class Solution:
     def maxPoints(self, points):
         if not points:
             return 0
+        if len(points) == 1:
+            return 1
         maxLines = []
         for point in points:
-            slopeList = sorted([self.slope(point, otherPoint) for otherPoint in points if otherPoint is not point])
-            maxLines.append(self.MaxLine(slopeList))
-        return max(maxLines)
-    
-    def MaxLine(self, slopeList):
-        # Given a sorted list of slopes, choose max points on a line
-        maxPoints = 0
-        count = 0
-        prevSlope = 'not begin'
-        samePoints = 0
-        for slope in slopeList:
-            # handle same points with this points
-            if slope == -float('inf'):
-                samePoints += 1
-                continue
-            # init prevSlope and count        
-            if prevSlope == 'not begin':
-                prevSlope = slope
-                count = 1
-            # maxPoints is to store max num of points on one line, 
-            # count is to store present num of points on present line
-            else:
-                if self.slopeEqual(slope, prevSlope):
-                    count += 1
+            slopeDict = {}
+            a = 0
+            for otherPoint in points:
+                slope = self.slope(point, otherPoint)
+                if slope == 'A':
+                    a += 1
                 else:
-                    maxPoints = count if count > maxPoints else maxPoints
-                    prevSlope = slope
-                    count = 1
-        else:
-            maxPoints = count if count > maxPoints else maxPoints
-        return maxPoints + 1 + samePoints
-                    
+                    if slope not in slopeDict:
+                        slopeDict[slope] = 1
+                    else:
+                        slopeDict[slope] += 1
+            print slopeDict
+            if not slopeDict:
+                maxLines.append(a)
+            else:
+                maxLines.append(max(slopeDict.values())+a)
+        return max(maxLines)
         
     def slope(self, pointB, pointA):
         # Calculate the slope between two points
@@ -69,12 +56,7 @@ class Solution:
             return 0.0
         # normal situation
         return (pointA.y - pointB.y) / (pointA.x - pointB.x + 0.0)
-    
-    def slopeEqual(self, slopeA, slopeB):
-        if slopeA == slopeB:
-            return True
-        return abs(slopeA - slopeB) < 0.000001
-    
+        
 if __name__ == '__main__':
 #     input = [Point(tuple) for tuple in [(4,0),(4,-1),(4,5)]]
     A = Point(2, 3)
