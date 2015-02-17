@@ -23,7 +23,6 @@ class Solution:
         maxLines = []
         for point in points:
             slopeList = sorted([self.slope(point, otherPoint) for otherPoint in points if otherPoint is not point])
-            print slopeList
             maxLines.append(self.MaxLine(slopeList))
         return max(maxLines)
     
